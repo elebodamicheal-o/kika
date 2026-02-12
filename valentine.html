@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Question</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Page 1 - Question Page Styles */
+        .question-page {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #e63946;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        .name {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 20px 50px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .no-btn {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .no-btn:hover {
+            transform: scale(0.95);
+            background: #d0d0d0;
+        }
+
+        .hearts {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* Page 2 - Balloon Page Styles */
+        .balloon-page {
+            background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .message {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .message h1 {
+            color: #e63946;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .message p {
+            color: #333;
+            font-size: 1.5em;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .balloon-body {
+            width: 200px;
+            height: 240px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 50%, #ffa5a5 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            box-shadow: inset -20px -20px 50px rgba(0, 0, 0, 0.1),
+                        0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .balloon-body::before {
+            content: '❤️';
+            position: absolute;
+            font-size: 4em;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .balloon-string {
+            width: 2px;
+            height: 150px;
+            background: #666;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .basket {
+            width: 80px;
+            height: 60px;
+            background: #8B4513;
+            margin: 0 auto;
+            border-radius: 0 0 10px 10px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .basket::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 5px;
+            right: 5px;
+            height: 10px;
+            background: #A0522D;
+            border-radius: 50%;
+        }
+
+        .basket-pattern {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background-image: 
+                linear-gradient(90deg, #654321 1px, transparent 1px),
+                linear-gradient(0deg, #654321 1px, transparent 1px);
+            background-size: 15px 15px;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0) rotate(-2deg);
+            }
+            25% {
+                transform: translateX(-45%) translateY(-150px) rotate(2deg);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-300px) rotate(-1deg);
+            }
+            75% {
+                transform: translateX(-55%) translateY(-150px) rotate(1deg);
+            }
+        }
+
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 100px;
+            opacity: 0.7;
+            animation: drift linear infinite;
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 100px;
+        }
+
+        .cloud1 {
+            width: 100px;
+            height: 40px;
+            top: 20%;
+            left: -150px;
+            animation: drift 25s linear infinite;
+        }
+
+        .cloud1::before {
+            width: 50px;
+            height: 40px;
+            top: -20px;
+            left: 10px;
+        }
+
+        .cloud1::after {
+            width: 60px;
+            height: 30px;
+            top: -10px;
+            right: 10px;
+        }
+
+        .cloud2 {
+            width: 120px;
+            height: 45px;
+            top: 40%;
+            left: -180px;
+            animation: drift 30s linear infinite;
+        }
+
+        .cloud2::before {
+            width: 55px;
+            height: 45px;
+            top: -22px;
+            left: 15px;
+        }
+
+        .cloud2::after {
+            width: 65px;
+            height: 35px;
+            top: -12px;
+            right: 15px;
+        }
+
+        .cloud3 {
+            width: 90px;
+            height: 35px;
+            top: 60%;
+            left: -120px;
+            animation: drift 20s linear infinite;
+        }
+
+        .cloud3::before {
+            width: 45px;
+            height: 35px;
+            top: -18px;
+            left: 8px;
+        }
+
+        .cloud3::after {
+            width: 50px;
+            height: 28px;
+            top: -8px;
+            right: 8px;
+        }
+
+        @keyframes drift {
+            from {
+                left: -200px;
+            }
+            to {
+                left: 110%;
+            }
+        }
+
+        .hearts-float {
+            position: absolute;
+            font-size: 2em;
+            animation: floatUp 10s infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(0) rotate(0deg);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        .heart1 { left: 20%; animation-delay: 0s; }
+        .heart2 { left: 40%; animation-delay: 2s; }
+        .heart3 { left: 60%; animation-delay: 4s; }
+        .heart4 { left: 80%; animation-delay: 6s; }
+        .heart5 { left: 30%; animation-delay: 8s; }
+
+        /* Hide/Show pages */
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .question {
+                font-size: 1.3em;
+            }
+            button {
+                padding: 15px 40px;
+                font-size: 1.2em;
+            }
+            .message h1 {
+                font-size: 2em;
+            }
+            .message p {
+                font-size: 1.2em;
+            }
+            .balloon-body {
+                width: 150px;
+                height: 180px;
+            }
+            .basket {
+                width: 60px;
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Question Page -->
+    <div id="page1" class="question-page">
+        <div class="container">
+            <div class="hearts">💕</div>
+            <h1>Will You Be My Valentine?</h1>
+            <p class="question">
+                <span class="name">Angel Solomon Kikachukwu</span>,<br>
+                will you be my Valentine?
+            </p>
+            <div class="buttons">
+                <button class="yes-btn" onclick="showBalloonPage()">Yes! 💖</button>
+                <button class="no-btn" onclick="alert('Are you sure? 😢 Maybe click Yes instead? 💕')">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: Balloon Page -->
+    <div id="page2" class="balloon-page hidden">
+        <div class="message">
+            <h1>Yay! 🎉</h1>
+            <p>You said YES! 💕</p>
+        </div>
+
+        <div class="balloon">
+            <div class="balloon-body"></div>
+            <div class="balloon-string"></div>
+            <div class="basket">
+                <div class="basket-pattern"></div>
+            </div>
+        </div>
+
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+
+        <div class="hearts-float heart1">💕</div>
+        <div class="hearts-float heart2">💖</div>
+        <div class="hearts-float heart3">💗</div>
+        <div class="hearts-float heart4">💓</div>
+        <div class="hearts-float heart5">💕</div>
+    </div>
+
+    <script>
+        function showBalloonPage() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
